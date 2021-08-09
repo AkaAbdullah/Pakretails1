@@ -1,0 +1,16 @@
+{% extends 'mainpage/base.html' %}
+{% block title %}Select Payment Method |{% endblock title %}
+{% block content %}
+
+<div class="container">
+    <div class="columns">
+        <div class="column is-4 is-offset-4">
+            <p class="title has-text-centered">Your Order Has Been Placed</p>
+            <a href="{% url 'orders' %}" class="button is-fullwidth is-link">View Order Status</a>
+            <br>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

@@ -1,0 +1,44 @@
+{% extends 'mainpage/base.html' %}
+{% load static %}
+{% block title %}Product Detail |{% endblock title %}
+
+{% block content %}
+<div class="container is-fluid">
+    <div class="columns">
+        <div class="column is-5">
+            <img src="{{product.product_image.url}}" width="450" height="450">
+        </div>
+        <div class="column is-7">
+            <p class="title is-size-4">{{product.title}}</p>
+            <hr>
+            <p>{{product.description}}.</p>
+            <br>
+            <p class="subtitle"> Price Rs : {{product.selling_price}}</p>
+            <br>
+            <p class="subtitle">Discounted Price : {{product.discounted_price}}</p>
+            {% if request.user.is_authenticated %}
+            {% if item_already_in_cart %}
+            <p> <strong>NOTE : </strong> This Item is already in your Cart</p>
+            <br>
+            <a href="{% url 'show_cart' %}" class="button is-danger">Go to Cart</a>
+            {% else %}
+            <form action="/add-to-cart" class="is-inline">
+                <input type="hidden" name="prod_id" value="{{product.id}}" id="prod_id">
+                <button class="button is-danger " type="submit">Add To Cart</button>
+            </form>
+            {% endif %}
+            {% endif %}
+            {% if not request.user.is_authenticated %}
+            <form action="/add-to-cart" class="is-inline">
+                <input type="hidden" name="prod_id" value="{{product.id}}" id="prod_id">
+                <button class="button is-danger " type="submit">Add To Cart</button>
+            </form>
+            {% endif %}
+
+
+
+
+        </div>
+    </div>
+</div>
+{% endblock content %}

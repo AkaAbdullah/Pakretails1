@@ -1,0 +1,46 @@
+{% extends 'mainpage/base.html' %}
+{% block title %}Orders |{% endblock title %}
+{% block content %}
+
+<div class="box">
+    <p class="subtitle has-text-centered"> Order Status</p>
+</div>
+
+<div class="container">
+    <div class="columns">
+        <div class="column">
+            {% for op in order_placed %}
+            <div class="box">
+                <div class="media">
+                    <div class="media-left">
+                        <img src="{{op.product.product_image.url}}" width="100" height="100">
+                    </div>
+                    <div class="media-content">
+                        <p><strong>{{op.product.title}}</strong></p>
+                        <p> <strong>Quantity: </strong> {{op.quantity}}</p>
+                        <p> <strong>Price: </strong> {{op.total_cost}}</p>
+                    </div>
+                    <div class="media-right">
+                        <p><strong> Order Status :</strong>{{op.status}}</p>
+                        {% if op.status == 'Accepted' %}
+                        <progress class="progress" value="15" max="100">15%</progress>
+                        {% endif %}
+                        {% if op.status == 'Packed' %}
+                        <progress class="progress is-link" value="40" max="100">15%</progress>
+                        {% endif %}
+                        {% if op.status == 'In Transit' %}
+                        <progress class="progress is-info" value="50" max="100">15%</progress>
+                        {% endif %}
+                        {% if op.status == 'Delivered' %}
+                        <progress class="progress is-warning" value="100" max="100">15%</progress>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

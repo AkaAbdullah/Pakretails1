@@ -1,0 +1,66 @@
+{% extends 'mainpage/base.html' %}
+{% load static %}
+{% block title %}Product Detail |{% endblock title %}
+
+{% block content %}
+<h1 class="title has-text-centered  is-size-4">Shopping Cart</h1>
+<div class="columns  mr-2 ml-2">
+    <div class="column is-9">
+        {% for cart in carts %}
+        <div class="box">
+            <p class="subtitle is-size-4"><strong>{{cart.product.title}}</strong></p>
+            <div class="media">
+                <div class="media-left">
+                    <img src="{{cart.product.product_image.url}}" width="100" height="100">
+                </div>
+                <div class="media-content">
+                    <p>{{cart.product.description}}</p>
+                    <br>
+                    <p class="is-flex-mobile">Quantity
+                        <a pid="{{cart.product.id}}" class="minus-cart ml-4">
+                            <i class="tag is-black is-rounded">-</i>
+                        </a>
+                        <strong class="mx-4">
+                            {{cart.quantity}}
+                        </strong>
+                        <a pid="{{cart.product.id}}" class="plus-cart">
+                            <i class="tag is-black is-rounded">+</i>
+                        </a>
+                    </p>
+                    <br>
+                    <a pid="{{cart.product.id}}" class="button is-danger remove-cart">Remove Item</a>
+                    <p class="has-text-right is-family-code"> <strong>RS :
+                            {{cart.product.selling_price}}</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="column is-3">
+        <div class="box">
+            <p class="subtitle is-size-5">Total Payable Amount</p>
+            <div style="overflow: hidden;">
+                <p style="float: left;">Amount</p>
+                <p style="float: right;"><span id="amount">{{amount}}</span></p>
+            </div>
+            <div style="overflow: hidden;">
+                <p style="float: left;">Shipping Cost</p>
+                <p style="float: right;">150</p>
+            </div>
+            <hr>
+            <div style="overflow: hidden;">
+                <p style="float: left;"> <strong> Total Amount</strong></p>
+                <p style="float: right;"><span id=totalamount>{{totalamount}}</span></p>
+            </div>
+            <hr>
+            <a href="{% url 'checkout' %}" class="button is-small is-fullwidth is-link">Place Order</a>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="{% static 'js/all.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+
+{% endblock content %}

@@ -1,0 +1,36 @@
+{% extends 'mainpage/base.html' %}
+{% block title %}Home |{% endblock title %}
+
+
+
+{% block content %}
+
+<section class="section">
+    <div class="columns">
+        <div class="column is-4 is-offset-4">
+            <div class="box">
+                <p class=" menu menu-label has-text-centered"> <strong class="is-size-5 ">sign up</strong> </p>
+                <form method="POST">
+                    {% if messages %}
+                    {% for messages in messages %}
+                    <p class="has-text-centered is-size-5">{{messages}}</p>
+                    {% endfor %}
+                    {% endif %}
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <br>
+                    <button class="button is-success is-fullwidth">Sign Up</button>
+                </form>
+            </div>
+        </div>
+        <div class="column is-4">
+            <div class="box">
+                <p class="subtitle is-size-5 has-text-centered">Already have an Account</p>
+                <hr>
+                <a href="{% url 'login_user' %}" class="button is-link is-fullwidth">Login Here</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}
