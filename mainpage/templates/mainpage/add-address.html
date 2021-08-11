@@ -1,0 +1,19 @@
+{% extends 'mainpage/base.html' %}
+{% block title %}Add Address | {% endblock title %}
+{% block content %}
+<section class="section">
+    <div class="columns">
+        <div class="column is-4 is-offset-4">
+            <div class="box">
+                <form method="POST">
+                    <p class="subtitle has-text-centered">Please Add Delivery Address</p>
+                    {% csrf_token %}
+                    {{fm}}
+                    <hr>
+                    <button name="custid2" class="button is-success is-fullwidth">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

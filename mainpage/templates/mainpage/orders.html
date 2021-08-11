@@ -2,12 +2,19 @@
 {% block title %}Orders |{% endblock title %}
 {% block content %}
 
-<div class="box">
-    <p class="subtitle has-text-centered"> Order Status</p>
-</div>
 
 <div class="container">
     <div class="columns">
+        <div class="column is-3">
+            <div class="box">
+                <p class="subtitle is-size-6 has-text-centered">Logged in as
+                    <strong>{{request.user.username|capfirst}}</strong>
+                </p>
+                <a href="{% url 'orders' %}" class="button is-small is-fullwidth">Orders</a>
+                <a href="{% url 'passwordchange' %}" class="button is-small is-fullwidth">Change Password</a>
+                <a href="{% url 'feedback' %}" class="button is-small is-fullwidth">Feedback and Suggestions</a>
+            </div>
+        </div>
         <div class="column">
             {% for op in order_placed %}
             <div class="box">

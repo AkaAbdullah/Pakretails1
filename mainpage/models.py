@@ -58,12 +58,18 @@ PAYMENT_CHOICES=(
 )
 class OrderPlaced(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    fullname=models.CharField(max_length=200)
     product =models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
     ordered_date = models.DateTimeField(auto_now_add=True)
+    city =models.CharField(max_length=50)
+    state=models.CharField(choices=STATE_CHOICES,max_length=50)
+    delivery_address =models.CharField(max_length=500)
+    email =models.CharField(max_length=70)
+    contact=models.CharField(max_length=30)
     status = models.CharField(choices=STATUS_CHOICES,max_length=50,default='pending')
-    paymentmethod = models.CharField(choices=PAYMENT_CHOICES,max_length=50)
+    paymentmethod = models.CharField(choices=PAYMENT_CHOICES,default='Cash on Delivery',max_length=50)
+    amount = models.IntegerField()
     @property
     def total_cost(self):
         return self.quantity * self.product.selling_price

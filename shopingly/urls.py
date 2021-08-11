@@ -8,9 +8,8 @@ from mainpage.forms import myLoginForm, myPasswordChangeForm
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.home,name='home'),
-    path('signup/',views.CustomerRegistrationView.as_view(),name='signup'),
+    path('signup/',views.signupuser,name='signup'),
     path('profile/',views.profile,name='profile'),
-    path('address/',views.AddressView.as_view(),name='address'),
     path('product-detail/<int:pk>',views.ProductDetailView.as_view(),name='productdetail'),
     path('add-to-cart/',views.add_to_cart,name='add-to-cart'),
     path('checkout/',views.checkout,name='checkout'),
@@ -19,7 +18,6 @@ urlpatterns = [
     path('loginuser/',auth_views.LoginView.as_view(template_name='mainpage/login.html',authentication_form=myLoginForm),name='login_user'),
     path('logout/',auth_views.LogoutView.as_view(), name='logout'),
     path('passwordchange/', auth_views.PasswordChangeView.as_view(template_name='mainpage/passwordchange.html',form_class=myPasswordChangeForm,success_url='/profile/'),name='passwordchange'),
-    path('delivery-address/',views.deliveryaddress,name='deliveryaddress'),
     path('cart/',views.show_cart,name='show_cart'),
     path('pluscart/',views.plus_cart),
     path('minuscart/',views.minus_cart),

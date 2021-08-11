@@ -10,22 +10,35 @@ from django.contrib import messages
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.contrib.auth.models import User
+from django.db import IntegrityError
+from django.contrib.auth import login
 
 def home(request):
     products= Product.objects.all()
     return render(request,'mainpage/home.html',{'products':products})
 
 
-class CustomerRegistrationView(View):
-    def get(self,request):
+
+def signupuser(request):
+    if request.method =='GET':
         form =CustomerRegistrationForm()
         return render(request,'mainpage/signup.html',{'form':form})
-    def post(self,request):
-        form=CustomerRegistrationForm(request.POST)
-        if form.is_valid():
-            form.save()
-        message=messages.success(request,'Account Created Suuccessfully!')
-        return redirect('login_user')
+    else:
+        form =CustomerRegistrationForm()
+        if request.POST['password1'] == request.POST['password2']:
+            try:
+                user =User.objects.create_user(request.POST['username'],password =request.POST['password1'])
+                user.save()
+                login(request,user)
+                return redirect('home')
+            except IntegrityError:
+                messages.success(request,'Username Already Taken')
+                return render(request, 'mainpage/signup.html',{'form':form})                
+        else:
+            messages.success(request,'Password Doesnot Match')
+            return render(request, 'mainpage/signup.html',{'form':form})
+
 
 @login_required
 def profile(request):
@@ -124,6 +137,7 @@ def checkout(request):
     user=request.user
     add= Customer.objects.filter(user=user)
     cart_items = Cart.objects.filter(user=user)
+    fom=AddressForm()
     amount = 0
     shipping_amount = 150
     total_amount = 0
@@ -134,7 +148,7 @@ def checkout(request):
             amount += tempamount
         totalamount= amount+shipping_amount
     fm=OrderPlacedForm()
-    return render(request,'mainpage/checkout.html',{'add':add,'totalamount':totalamount,'cart_items':cart_items,'fm':fm})
+    return render(request,'mainpage/checkout.html',{'add':add,'totalamount':totalamount,'cart_items':cart_items,'fm':fm,'fom':fom})
 
 
 @method_decorator(login_required, name='dispatch')
@@ -192,12 +206,26 @@ class FeedbackView(View):
             return redirect('login_user')
 def paymentmethod(request):
     user=request.user
-    custid =request.GET.get('custid')
+    fullname = request.GET.get('fullname')
+    city = request.GET.get('city')
+    state =request.GET.get('state')
+    delivery_address =request.GET.get('address')
+    print(delivery_address)
+    email =request.GET.get('email')
+    contact=request.GET.get('phone_no')
     paymentmethod = request.GET.get('paymentmethod')
-    customer = Customer.objects.get(id=custid)
     cart = Cart.objects.filter(user=user)
+    amount = 0
+    shipping_amount = 150
+    total_amount = 0
+    cart_product =[p for p in Cart.objects.all() if p.user== request.user]
+    if cart_product:
+        for p in cart_product:
+            tempamount = (p.quantity * p.product.selling_price)
+            amount += tempamount
+        totalamount= amount+shipping_amount
     for c in cart:
-        OrderPlaced(user=user,customer=customer,product=c.product,quantity=c.quantity,paymentmethod=paymentmethod).save()
+        OrderPlaced(user=user,fullname=fullname,product=c.product,quantity=c.quantity,city=city,state=state,delivery_address=delivery_address,email=email,contact=contact,paymentmethod=paymentmethod,amount=totalamount).save()
         c.delete()
     return render(request, 'mainpage/paymentmethod.html')
 

@@ -20,8 +20,8 @@ class CartModelAdmin(admin.ModelAdmin):
     list_filter = ("product", )
 @admin.register(OrderPlaced)
 class OrderPlacedModelAdmin(admin.ModelAdmin):
-    list_display=['user','customer','product','ordered_date','status','paymentmethod']
-    list_filter = ("customer", )
+    list_display=['user','fullname','product','quantity','ordered_date','city','state','delivery_address','email','contact','status','paymentmethod','amount']
+    list_filter = ("status", )
 @admin.register(Feedback)
 class FeedbackModelAdmin(admin.ModelAdmin):
     list_display=['id','user','message']

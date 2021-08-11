@@ -9,13 +9,14 @@
                 <p class="subtitle is-size-6 has-text-centered">Logged in as
                     <strong>{{request.user.username|capfirst}}</strong>
                 </p>
-                <a href="{% url 'address' %}" class="button is-small is-fullwidth">Address</a>
-                <a href="{% url 'deliveryaddress' %}" class="button is-small is-fullwidth">View Delivery Addresses</a>
                 <a href="{% url 'orders' %}" class="button is-small is-fullwidth">Orders</a>
                 <a href="{% url 'passwordchange' %}" class="button is-small is-fullwidth">Change Password</a>
                 <a href="{% url 'feedback' %}" class="button is-small is-fullwidth">Feedback and Suggestions</a>
-
-
+            </div>
+        </div>
+        <div class="column is-3 is-hidden">
+            <div class="box has-background linklight">
+                <p class="subtitle has-text-centered">Dashboard</p>
             </div>
         </div>
     </div>

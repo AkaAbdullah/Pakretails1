@@ -2,20 +2,14 @@
 {% block title %}FeedBack |{% endblock title %}
 {% block content %}
 
-<div>
-    <p class="title has-text-centered">FeedBack and Suggestions</p>
-    <hr>
-</div>
-
-<section class="section">
+<div class="container">
     <div class="columns">
         <div class="column is-3">
             <div class="box">
                 <p class="subtitle is-size-6 has-text-centered">Logged in as
                     <strong>{{request.user.username|capfirst}}</strong>
                 </p>
-                <a href="{% url 'address' %}" class="button is-small is-fullwidth">Address</a>
-                <a href="{% url 'deliveryaddress' %}" class="button is-small is-fullwidth">View Delivery Addresses</a>
+                <a href="{% url 'orders' %}" class="button is-small is-fullwidth">Orders</a>
                 <a href="{% url 'passwordchange' %}" class="button is-small is-fullwidth">Change Password</a>
                 <a href="{% url 'feedback' %}" class="button is-small is-fullwidth">Feedback and Suggestions</a>
 
@@ -39,5 +33,5 @@
             </div>
         </div>
     </div>
-</section>
+</div>
 {% endblock content %}
