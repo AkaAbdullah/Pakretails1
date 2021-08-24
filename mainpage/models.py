@@ -73,7 +73,9 @@ class OrderPlaced(models.Model):
     @property
     def total_cost(self):
         return self.quantity * self.product.selling_price
-
+    class Meta:
+        ordering=['-ordered_date']
 class Feedback(models.Model):
     user=models.ForeignKey(User, on_delete=models.CASCADE)
     message = models.TextField(max_length=500)
+

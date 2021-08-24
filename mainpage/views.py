@@ -13,6 +13,16 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import login
+from rest_framework import generics, serializers,permissions
+from .serialiazers import OrderSerializer
+
+class OrdersAPI(generics.ListCreateAPIView):
+    queryset = OrderPlaced.objects.all()
+    serializer_class = OrderSerializer
+    permission_classes =[permissions.IsAuthenticated]
+    def perfom_create(self,serializer):
+        serializer.save(user=self.request.user)
+
 
 def home(request):
     products= Product.objects.all()

@@ -24,6 +24,7 @@ urlpatterns = [
     path('removecart/',views.remove_cart),
     path('about/',views.about,name='about'),
     path('feedback/',views.FeedbackView.as_view(),name='feedback'),
+    path('api/orders', views.OrdersAPI.as_view()),
 
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

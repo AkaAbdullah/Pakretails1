@@ -21,7 +21,9 @@
         <div class="column is-3">
             <div class="card ">
                 <div class="card-image has-text-centered px-3 ">
-                    <img class="mt-4" src="{{ items.product_image.url }}" height=300px width=300px alt="">
+                    <a href="{% url 'productdetail' items.id %}">
+                        <img class="mt-4" src="{{ items.product_image.url }}" height=300px width=300px alt="">
+                    </a>
                 </div>
                 <div class="card-content">
                     <p class="is-size-5 has-text-centered has-text-weight-semibold">{{ items.title }}</p>
